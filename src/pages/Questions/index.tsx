@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pagination } from '@material-ui/lab';
 import { Grid, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -33,6 +33,10 @@ const Questions: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (!questions.length) history.push('/');
+  }, []);
+
   return (
     <Container>
       <div className={classes.container}>
@@ -41,11 +45,13 @@ const Questions: React.FC = () => {
           page={page + 1}
           variant="outlined"
         />
-        <Question
-          data={questions[page]}
-          page={page}
-          onContinue={() => handleChangePage(page + 1)}
-        />
+        {questions.length && (
+          <Question
+            data={questions[page]}
+            page={page}
+            onContinue={() => handleChangePage(page + 1)}
+          />
+        )}
         <Grid item xs={12} sm={6}>
           {/* <Button
             onClick={() => handleChangePage(page - 1)}

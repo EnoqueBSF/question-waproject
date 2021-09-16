@@ -28,6 +28,7 @@ const Question: React.FC<IProps> = ({ data, page, onContinue }: IProps) => {
   const { insertStatistics } = useQuestion();
 
   useEffect(() => {
+    if (!data) history.push('/reports');
     setChosenOption({
       chosen: '',
       hit: false,
@@ -38,8 +39,11 @@ const Question: React.FC<IProps> = ({ data, page, onContinue }: IProps) => {
         hit: data.hit,
       });
     }
-    if (!data) history.push('/reports');
   }, [data, history]);
+
+  const sanitize = (text: string): string => {
+    return text.replaceAll(/&quot;/gm, '').replaceAll(/&#039;/gm, '');
+  };
 
   const chosen = (alternative: string) => {
     if (alternative === data.correct_answer) {
@@ -88,7 +92,7 @@ const Question: React.FC<IProps> = ({ data, page, onContinue }: IProps) => {
                 }}
                 disabled={!!chosenOption.chosen}
               >
-                {`${alphabet[index]}. ${answer}`}
+                {`${alphabet[index]}. ${sanitize(answer)}`}
               </Button>
             ))}
           </Grid>
@@ -124,7 +128,7 @@ const Question: React.FC<IProps> = ({ data, page, onContinue }: IProps) => {
                 }}
                 disabled={!!chosenOption.chosen}
               >
-                {`${alphabet[index]}. ${answer}`}
+                {`${alphabet[index]}. ${sanitize(answer)}`}
               </Button>
             ))}
           </Grid>
@@ -134,6 +138,7 @@ const Question: React.FC<IProps> = ({ data, page, onContinue }: IProps) => {
         return <div />;
     }
   };
+
   return (
     <div
       style={{
@@ -147,12 +152,8 @@ const Question: React.FC<IProps> = ({ data, page, onContinue }: IProps) => {
       }}
     >
       <p>
-        Questão {page + 1} - {data.question}
+        Questão {page + 1} - {sanitize(data.question)}
       </p>
-      {/* <p>{data.category}</p>
-      <p>{data.difficulty}</p>
-      <p>{data.question}</p>
-      <p>{data.type}</p> */}
       {renderItem()}
     </div>
   );
