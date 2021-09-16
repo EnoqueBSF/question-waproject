@@ -5,7 +5,7 @@ import { QuestionProvider } from './context/QuestionContext';
 import Routes from './routes';
 
 import 'react-toastify/dist/ReactToastify.css';
-import './app.css';
+import '~/App.css';
 
 const App: React.FC = () => (
   <BrowserRouter>
