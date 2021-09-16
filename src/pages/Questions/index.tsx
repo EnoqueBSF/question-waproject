@@ -27,7 +27,7 @@ const Questions: React.FC = () => {
   const handleChangePage = (number: number): void => {
     if (number >= 0 && number <= questions.length) {
       if (number >= questions.length) {
-        history.push('/reports');
+        history.push('/report');
       }
       setPage(number);
     }

@@ -137,13 +137,13 @@ const Question: React.FC<IProps> = ({ data, page, onContinue }: IProps) => {
   return (
     <div
       style={{
-        width: '100%',
+        width: '80%',
         background: '#fff',
         padding: '50px',
         boxSizing: 'border-box',
         borderRadius: '25px',
-        border: 'solid 1px #000',
-        margin: '20px 0',
+        margin: '30px 0px',
+        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
       }}
     >
       <p>

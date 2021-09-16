@@ -22,6 +22,7 @@ interface ILoadQuestion {
 }
 
 export interface IStatistics {
+  key: Date;
   hits: number;
   errors: number;
   questions: IStatistic[];
@@ -56,6 +57,7 @@ export interface IQuestionsContext {
     type,
     alternatives,
   }: IStatistic): void;
+  cleanStatistics(): void;
 }
 
 interface AuxProps {
@@ -69,6 +71,7 @@ const QuestionContext = createContext<IQuestionsContext>(
 const QuestionProvider: React.FC<AuxProps> = ({ children }: AuxProps) => {
   const [questions, setQuestions] = useState<IQuestion[]>([] as IQuestion[]);
   const [statistics, setStatistics] = useState<IStatistics>({
+    key: new Date(),
     hits: 0,
     errors: 0,
     questions: [],
@@ -112,6 +115,7 @@ const QuestionProvider: React.FC<AuxProps> = ({ children }: AuxProps) => {
     setStatistics(currentValue => {
       return {
         ...currentValue,
+        key: new Date(),
         hits: hit ? currentValue.hits + 1 : currentValue.hits,
         errors: !hit ? currentValue.errors + 1 : currentValue.errors,
         questions: [
@@ -133,9 +137,24 @@ const QuestionProvider: React.FC<AuxProps> = ({ children }: AuxProps) => {
     });
   };
 
+  const cleanStatistics = () => {
+    setStatistics({
+      key: new Date(),
+      hits: 0,
+      errors: 0,
+      questions: [],
+    } as IStatistics);
+  };
+
   return (
     <QuestionContext.Provider
-      value={{ questions, loadQuestions, insertStatistics, statistics }}
+      value={{
+        questions,
+        loadQuestions,
+        insertStatistics,
+        statistics,
+        cleanStatistics,
+      }}
     >
       {children}
     </QuestionContext.Provider>

@@ -5,6 +5,7 @@ import Home from '~/pages/Home';
 import Decision from '~/pages/Decision';
 import Questions from '~/pages/Questions';
 import Reports from '~/pages/Reports';
+import Report from '~/pages/Report';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -12,6 +13,7 @@ const Routes: React.FC = () => (
     <Route path="/decision/questions/:numbers" exact component={Decision} />
     <Route path="/questions" exact component={Questions} />
     <Route path="/reports" exact component={Reports} />
+    <Route path="/report" exact component={Report} />
   </Switch>
 );
 

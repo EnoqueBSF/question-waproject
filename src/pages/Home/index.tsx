@@ -3,6 +3,7 @@ import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Container from '~/components/Container';
+import useLocalStorage from '~/hooks/useLocalStorage';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
   const numberRef = useRef('');
   const history = useHistory();
   const classes = useStyles();
+  const { find } = useLocalStorage();
 
   const handleSubmit = () => {
     if (
@@ -43,6 +45,17 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Grid container xs={12}>
+        {JSON.parse(find({ key: 'statistics' })) && (
+          <Button
+            className={classes.submit}
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={() => history.push('/reports')}
+          >
+            Reports anteriores
+          </Button>
+        )}
         <Grid item xs={12}>
           <TextField
             variant="outlined"
